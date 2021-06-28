@@ -81,7 +81,7 @@
          <?php
          include("koneksi.php");
          // query untuk menampilkan data
-         $sql3 = 'SELECT * FROM matakuliah';
+         $sql3 = 'SELECT * FROM mata_pelajaran';
          $result = mysqli_query($conn, $sql3);
          ?>
          <h3>Tabel Mata Pelajaran</h3>
@@ -112,8 +112,8 @@
          <table>
           <tr>
             <th>ID Rapot</th>
-            <th>Nama Murid</th>
-            <th>Mata Pelajaran</th>
+            <th>NIM</th>
+            <th>Kode Mata Pelajaran</th>
             <th>NIK Guru</th>
             <th>Nilai</th>
          </tr>
@@ -121,8 +121,8 @@
             <?php while($row = mysqli_fetch_array($result)): ?>
             <tr>
                <td><?= $row['id_rapot'];?></td>
-               <td><?= $row['nama_murid'];?></td>
-               <td><?= $row['nama_mp'];?></td>
+               <td><?= $row['nim'];?></td>
+               <td><?= $row['kode_mp'];?></td>
                <td><?= $row['nik'];?></td>
                <td><?= $row['nilai'];?></td>
             </tr>             
