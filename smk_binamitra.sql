@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 21 Jun 2021 pada 19.50
+-- Waktu pembuatan: 28 Jun 2021 pada 08.12
 -- Versi server: 10.4.17-MariaDB
 -- Versi PHP: 8.0.0
 
@@ -28,9 +28,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `guru` (
-  `nik` int(5) NOT NULL,
+  `nik` varchar(5) NOT NULL,
   `nama_guru` varchar(20) NOT NULL,
-  `no_tlp` varchar(13) NOT NULL
+  `no_tlp` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -38,11 +38,8 @@ CREATE TABLE `guru` (
 --
 
 INSERT INTO `guru` (`nik`, `nama_guru`, `no_tlp`) VALUES
-(1, 'Panji', '0821-1440-123'),
-(2, 'Surya', '0821-1440-456'),
-(3, 'Alanda', '0821-1440-789'),
-(4, 'Adi', '0821-1440-891'),
-(5, 'Dimas', '0821-1440-010');
+('GR-01', 'Panji', '0821-1440-1231'),
+('GR-02', 'April', '0821-1440-4564');
 
 -- --------------------------------------------------------
 
@@ -51,7 +48,7 @@ INSERT INTO `guru` (`nik`, `nama_guru`, `no_tlp`) VALUES
 --
 
 CREATE TABLE `mata_pelajaran` (
-  `kode_mp` int(5) NOT NULL,
+  `kode_mp` varchar(3) NOT NULL,
   `nama_mp` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -60,11 +57,9 @@ CREATE TABLE `mata_pelajaran` (
 --
 
 INSERT INTO `mata_pelajaran` (`kode_mp`, `nama_mp`) VALUES
-(101, 'Bahasa Indonesia'),
-(103, 'Bahasa Ingris'),
-(104, 'IPA'),
-(105, 'IPS'),
-(102, 'MTK');
+('IPA', 'IPA'),
+('IPS', 'IPA'),
+('TIK', 'Teknik Informasi');
 
 -- --------------------------------------------------------
 
@@ -73,7 +68,7 @@ INSERT INTO `mata_pelajaran` (`kode_mp`, `nama_mp`) VALUES
 --
 
 CREATE TABLE `murid` (
-  `nim` int(5) NOT NULL,
+  `nim` varchar(5) NOT NULL,
   `nama_murid` varchar(20) NOT NULL,
   `tgl_lahir` date NOT NULL,
   `jenis_kelamin` varchar(1) NOT NULL
@@ -84,11 +79,8 @@ CREATE TABLE `murid` (
 --
 
 INSERT INTO `murid` (`nim`, `nama_murid`, `tgl_lahir`, `jenis_kelamin`) VALUES
-(1, 'Robi', '2001-06-08', 'L'),
-(2, 'Raka', '2000-05-11', 'L'),
-(3, 'Dessy', '2002-01-01', 'P'),
-(4, 'Mawar', '2001-04-02', 'P'),
-(5, 'Dadang', '2001-11-04', 'L');
+('MRD01', 'Puja', '1996-04-06', 'L'),
+('MRD02', 'Desi', '1996-08-31', 'P');
 
 -- --------------------------------------------------------
 
@@ -97,19 +89,20 @@ INSERT INTO `murid` (`nim`, `nama_murid`, `tgl_lahir`, `jenis_kelamin`) VALUES
 --
 
 CREATE TABLE `nilai_rapot` (
-  `id_rapot` int(5) NOT NULL,
-  `nama_murid` varchar(20) NOT NULL,
-  `nama_mp` varchar(20) NOT NULL,
-  `nik` int(5) NOT NULL,
-  `nilai` varchar(2) NOT NULL
+  `id_rapot` varchar(5) NOT NULL,
+  `nim` varchar(5) NOT NULL,
+  `kode_mp` varchar(3) NOT NULL,
+  `nik` varchar(5) NOT NULL,
+  `nilai` varchar(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `nilai_rapot`
 --
 
-INSERT INTO `nilai_rapot` (`id_rapot`, `nama_murid`, `nama_mp`, `nik`, `nilai`) VALUES
-(1, 'Dadang', 'Bahasa Indonesia', 1, '80');
+INSERT INTO `nilai_rapot` (`id_rapot`, `nim`, `kode_mp`, `nik`, `nilai`) VALUES
+('RPT-1', 'MRD01', 'TIK', 'GR-02', '80'),
+('RPT-2', 'MRD02', 'TIK', 'GR-02', '90');
 
 --
 -- Indexes for dumped tables
@@ -125,24 +118,22 @@ ALTER TABLE `guru`
 -- Indeks untuk tabel `mata_pelajaran`
 --
 ALTER TABLE `mata_pelajaran`
-  ADD PRIMARY KEY (`kode_mp`),
-  ADD UNIQUE KEY `nama_mp` (`nama_mp`);
+  ADD PRIMARY KEY (`kode_mp`);
 
 --
 -- Indeks untuk tabel `murid`
 --
 ALTER TABLE `murid`
-  ADD PRIMARY KEY (`nim`),
-  ADD UNIQUE KEY `nama_murid` (`nama_murid`);
+  ADD PRIMARY KEY (`nim`);
 
 --
 -- Indeks untuk tabel `nilai_rapot`
 --
 ALTER TABLE `nilai_rapot`
   ADD PRIMARY KEY (`id_rapot`),
-  ADD KEY `nik` (`nik`),
-  ADD KEY `nama_mp` (`nama_mp`),
-  ADD KEY `nama_murid` (`nama_murid`);
+  ADD KEY `nim` (`nim`),
+  ADD KEY `kode_mp` (`kode_mp`),
+  ADD KEY `nik` (`nik`);
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -152,9 +143,9 @@ ALTER TABLE `nilai_rapot`
 -- Ketidakleluasaan untuk tabel `nilai_rapot`
 --
 ALTER TABLE `nilai_rapot`
-  ADD CONSTRAINT `nilai_rapot_ibfk_3` FOREIGN KEY (`nik`) REFERENCES `guru` (`nik`),
-  ADD CONSTRAINT `nilai_rapot_ibfk_4` FOREIGN KEY (`nama_mp`) REFERENCES `mata_pelajaran` (`nama_mp`),
-  ADD CONSTRAINT `nilai_rapot_ibfk_5` FOREIGN KEY (`nama_murid`) REFERENCES `murid` (`nama_murid`);
+  ADD CONSTRAINT `nilai_rapot_ibfk_1` FOREIGN KEY (`nim`) REFERENCES `murid` (`nim`),
+  ADD CONSTRAINT `nilai_rapot_ibfk_2` FOREIGN KEY (`kode_mp`) REFERENCES `mata_pelajaran` (`kode_mp`),
+  ADD CONSTRAINT `nilai_rapot_ibfk_3` FOREIGN KEY (`nik`) REFERENCES `guru` (`nik`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
