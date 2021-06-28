@@ -14,8 +14,9 @@ ada 4 tabel
 4. Tabel Guru
 
 Desain Database:
-![1](https://user-images.githubusercontent.com/81550517/122805712-a27e3c80-d2f3-11eb-921f-f6ed731c8167.png)
+
+![1](https://user-images.githubusercontent.com/81550517/123588871-a0940c00-d812-11eb-86ca-f30a02ce0590.png)
 
 Hasil run : 
 
-![2](https://user-images.githubusercontent.com/81550517/122805761-b164ef00-d2f3-11eb-99ea-d5c8b693e947.png)
+![2](https://user-images.githubusercontent.com/81550517/123588894-a7bb1a00-d812-11eb-9845-61dae291aba4.png)
